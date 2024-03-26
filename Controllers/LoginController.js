@@ -8,23 +8,23 @@ dotenv.config({ path: "./.env" });
 
 // Create a new user
 const createUser = expressAsyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password, role } = req.body;
 
   // Check if the user already exists in the database
-  const existingUser = await Users.find((user) => user.email === email);
-  if (existingUser) {
+  const existingUser = Users.filter((user) => user.email === email);
+  console.log(existingUser.length);
+  if (existingUser.length !== 0) {
     return res.status(400).json({ message: "User already exists" });
   }
 
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
+  // const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Create a new user instance
-  const newUser = new User({
-    name,
+  const newUser = {
+    id: Users.length + 1,
     email,
-    password: hashedPassword,
-  });
+    password,
+    role,
+  };
 
   // Save the user to the database
   Users.push(newUser);

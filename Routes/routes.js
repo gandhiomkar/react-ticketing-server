@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 // const verifyToken = require("../middleware/Auth");
-const { loginUser } = require("../Controllers/LoginController.js");
+const { loginUser, createUser } = require("../Controllers/LoginController.js");
 const { gettechsupport } = require("../Controllers/UserController.js");
 const {
   gettickets,
@@ -49,5 +49,7 @@ router.put("/updateticketstatus/:ticketId", updateTicketStatus);
 router.post("/createticket", upload.single("file"), createTicket);
 
 router.delete("/tickets/:ticketId", deleteTicket);
+
+router.post("/register", createUser);
 
 module.exports = router;
